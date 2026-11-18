@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="TaskFlow, une application simple et élégante pour organiser vos tâches quotidiennes.">
+  <meta name="theme-color" content="#7657f6">
+  <title>TaskFlow — Organisez vos journées</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#" aria-label="TaskFlow, accueil">
+        <span class="brand-mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4.2 4.2L19.5 6"/></svg></span>
+        <span>task<span>flow</span></span>
+      </a>
+
+      <div class="sidebar-label">ESPACE DE TRAVAIL</div>
+      <nav class="nav-list" aria-label="Navigation principale">
+        <button class="nav-item active" data-filter="all">
+          <span class="nav-icon">▦</span><span>Mes tâches</span><span class="nav-count" id="nav-all-count">0</span>
+        </button>
+        <button class="nav-item" data-filter="active">
+          <span class="nav-icon">◷</span><span>À faire</span><span class="nav-count" id="nav-active-count">0</span>
+        </button>
+        <button class="nav-item" data-filter="completed">
+          <span class="nav-icon">✓</span><span>Terminées</span><span class="nav-count" id="nav-completed-count">0</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <div class="tip-card">
+          <span class="tip-icon">✦</span>
+          <strong>Un pas à la fois.</strong>
+          <p>Les grandes réussites commencent par de petites actions.</p>
+        </div>
+        <div class="profile">
+          <div class="avatar">TF</div>
+          <div><strong>Mon espace</strong><small>Compte personnel</small></div>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div class="breadcrumb">Espace de travail <span>/</span> <strong id="breadcrumb-current">Mes tâches</strong></div>
+        <div class="top-actions">
+          <span class="today-label" id="today-label"></span>
+          <button class="icon-button theme-toggle" id="theme-toggle" aria-label="Activer le thème sombre" title="Changer de thème">
+            <svg class="sun-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></svg>
+            <svg class="moon-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.2 15.4A8.5 8.5 0 0 1 8.6 3.8 8.6 8.6 0 1 0 20.2 15.4Z"/></svg>
+          </button>
+        </div>
+      </header>
+
+      <section class="welcome-section">
+        <div>
+          <p class="eyebrow">VOTRE PRODUCTIVITÉ, EN UN SEUL ENDROIT</p>
+          <h1>Bonjour, prêt à avancer ? <span>✦</span></h1>
+          <p class="welcome-subtitle">Organisez vos priorités et faites de chaque journée une réussite.</p>
+        </div>
+        <button class="primary-button" id="open-task-modal"><span>＋</span> Nouvelle tâche</button>
+      </section>
+
+      <section class="stats-grid" aria-label="Statistiques des tâches">
+        <article class="stat-card">
+          <div class="stat-top"><span class="stat-icon purple">▦</span><span class="stat-caption">En tout</span></div>
+          <strong class="stat-number" id="total-count">0</strong><span class="stat-description">Tâches enregistrées</span>
+        </article>
+        <article class="stat-card">
+          <div class="stat-top"><span class="stat-icon orange">◷</span><span class="stat-caption">À faire</span></div>
+          <strong class="stat-number" id="active-count">0</strong><span class="stat-description">Encore à accomplir</span>
+        </article>
+        <article class="stat-card">
+          <div class="stat-top"><span class="stat-icon green">✓</span><span class="stat-caption">Terminées</span></div>
+          <strong class="stat-number" id="completed-count">0</strong><span class="stat-description">Bravo pour vos efforts !</span>
+        </article>
+      </section>
+
+      <section class="tasks-section">
+        <div class="section-heading">
+          <div><h2 id="tasks-heading">Toutes les tâches</h2><p id="tasks-subheading">Gardez le cap sur vos objectifs.</p></div>
+          <div class="filter-tabs" role="group" aria-label="Filtrer les tâches">
+            <button class="filter-tab selected" data-filter="all">Toutes</button>
+            <button class="filter-tab" data-filter="active">À faire</button>
+            <button class="filter-tab" data-filter="completed">Terminées</button>
+          </div>
+        </div>
+        <div class="task-list" id="task-list" aria-live="polite"></div>
+        <div class="empty-state" id="empty-state">
+          <div class="empty-illustration">✦</div>
+          <h3 id="empty-title">Votre espace est libre !</h3>
+          <p id="empty-message">Ajoutez votre première tâche et commencez à avancer.</p>
+          <button class="text-button" id="empty-add-button">＋ Ajouter une tâche</button>
+        </div>
+      </section>
+      <footer class="footer">Fait avec soin par <strong>TaskFlow</strong> <span>•</span> Chaque progrès compte.</footer>
+    </main>
+  </div>
+
+  <div class="modal-backdrop" id="task-modal" aria-hidden="true">
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div class="modal-header"><div><p class="eyebrow">RESTEZ ORGANISÉ</p><h2 id="modal-title">Nouvelle tâche</h2></div><button class="icon-button close-modal" id="close-task-modal" aria-label="Fermer">×</button></div>
+      <form id="task-form">
+        <label for="task-title">Titre de la tâche <span>*</span></label>
+        <input id="task-title" name="title" type="text" maxlength="90" placeholder="Ex. Préparer la présentation" required>
+        <label for="task-description">Description <small>(facultatif)</small></label>
+        <textarea id="task-description" name="description" rows="3" maxlength="240" placeholder="Ajoutez quelques détails..."></textarea>
+        <label for="task-date">Date d'échéance <small>(facultatif)</small></label>
+        <input id="task-date" name="date" type="date">
+        <div class="form-actions"><button type="button" class="secondary-button" id="cancel-task">Annuler</button><button type="submit" class="primary-button" id="save-task">Ajouter la tâche</button></div>
+      </form>
+    </section>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
